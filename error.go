@@ -8,31 +8,31 @@ type Error interface {
 }
 
 func NewError(code string, message string) Error {
-	return &FactoryError{
+	return &factoryError{
 		code:    code,
 		message: message,
 	}
 }
 
-type FactoryError struct {
+type factoryError struct {
 	code    string
 	message string
 }
 
-func (e *FactoryError) Code() string {
+func (e *factoryError) Code() string {
 	return e.code
 }
 
-func (e *FactoryError) WithCode(code string) Error {
+func (e *factoryError) WithCode(code string) Error {
 	e.code = code
 	return e
 }
 
-func (e *FactoryError) Message() string {
+func (e *factoryError) Message() string {
 	return e.message
 }
 
-func (e*FactoryError) WithMessage(message string) Error {
+func (e *factoryError) WithMessage(message string) Error {
 	e.message = message
 	return e
 }
