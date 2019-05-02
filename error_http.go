@@ -1,8 +1,7 @@
 package errors
 
 type HttpError interface {
-	Error() Error
-	WithError(error Error) HttpError
+	Error
 	Status() int
 	WithStatus(status int) HttpError
 }
@@ -19,12 +18,21 @@ type factoryHttpError struct {
 	error  Error
 }
 
-func (e *factoryHttpError) Error() Error {
-	return e.error
+func (e *factoryHttpError) Code() string {
+	return e.error.Code()
 }
 
-func (e *factoryHttpError) WithError(error Error) HttpError {
-	e.error = error
+func (e *factoryHttpError) WithCode(code string) Error {
+	e.error.WithCode(code)
+	return e
+}
+
+func (e *factoryHttpError) Message() string {
+	return e.error.Message()
+}
+
+func (e *factoryHttpError) WithMessage(message string) Error {
+	e.error.WithMessage(message)
 	return e
 }
 
