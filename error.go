@@ -1,5 +1,7 @@
 package errors
 
+import "encoding/json"
+
 type Error interface {
 	error
 	Code() string
@@ -18,6 +20,16 @@ func NewError(code string, message string) Error {
 type factoryError struct {
 	code    string
 	message string
+}
+
+func (e *factoryError) MarshalJSON() ([]byte, error) {
+	return json.Marshal(struct {
+		Code    string `json:"code"`
+		Message string `json:"message"`
+	}{
+		Code:    e.code,
+		Message: e.message,
+	})
 }
 
 func (e *factoryError) Error() string {
@@ -41,5 +53,3 @@ func (e *factoryError) WithMessage(message string) Error {
 	e.message = message
 	return e
 }
-
-
