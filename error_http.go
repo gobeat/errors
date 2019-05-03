@@ -18,12 +18,16 @@ type factoryHttpError struct {
 	error  Error
 }
 
+func (e *factoryHttpError) Error() string {
+	return e.error.Message()
+}
+
 func (e *factoryHttpError) Code() string {
 	return e.error.Code()
 }
 
 func (e *factoryHttpError) WithCode(code string) Error {
-	e.error.WithCode(code)
+	_ = e.error.WithCode(code)
 	return e
 }
 
@@ -32,7 +36,7 @@ func (e *factoryHttpError) Message() string {
 }
 
 func (e *factoryHttpError) WithMessage(message string) Error {
-	e.error.WithMessage(message)
+	_ = e.error.WithMessage(message)
 	return e
 }
 

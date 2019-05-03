@@ -1,6 +1,7 @@
 package errors
 
 type Error interface {
+	error
 	Code() string
 	WithCode(code string) Error
 	Message() string
@@ -17,6 +18,10 @@ func NewError(code string, message string) Error {
 type factoryError struct {
 	code    string
 	message string
+}
+
+func (e *factoryError) Error() string {
+	return e.message
 }
 
 func (e *factoryError) Code() string {
