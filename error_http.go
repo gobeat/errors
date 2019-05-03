@@ -1,5 +1,7 @@
 package errors
 
+import "encoding/json"
+
 type HttpError interface {
 	Error
 	Status() int
@@ -16,6 +18,16 @@ func NewHttpError(status int, error Error) HttpError {
 type factoryHttpError struct {
 	status int
 	error  Error
+}
+
+func (e *factoryHttpError) MarshalJSON() ([]byte, error) {
+	return json.Marshal(struct {
+		Code    string `json:"code"`
+		Message string `json:"message"`
+	}{
+		Code:    e.Code(),
+		Message: e.Message(),
+	})
 }
 
 func (e *factoryHttpError) Error() string {
