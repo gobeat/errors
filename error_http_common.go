@@ -2,22 +2,22 @@ package errors
 
 import "net/http"
 
-func NewBadRequestError(error Error) HttpError {
-	return NewHttpError(http.StatusBadRequest, error)
+func NewBadRequestError(code string, message string) HttpError {
+	return NewHttpError(code, message, http.StatusBadRequest)
 }
 
-func NewInternalServerErrorError(error Error) HttpError {
-	return NewHttpError(http.StatusInternalServerError, error)
+func NewInternalServerErrorError(code string, message string) HttpError {
+	return NewHttpError(code, message, http.StatusInternalServerError)
 }
 
-func NewUnauthorizedError(error Error) HttpError {
-	return NewHttpError(http.StatusUnauthorized, error)
+func NewUnauthorizedError(code string, message string) HttpError {
+	return NewHttpError(code, message, http.StatusUnauthorized)
 }
 
-func NewForbiddenError(error Error) HttpError {
-	return NewHttpError(http.StatusForbidden, error)
+func NewForbiddenError(code string, message string) HttpError {
+	return NewHttpError(code, message, http.StatusForbidden)
 }
 
-func NewNotFoundError(error Error) HttpError {
-	return NewHttpError(http.StatusNotFound, error)
+func NewNotFoundError(code string, message string) HttpError {
+	return NewHttpError(code, message, http.StatusNotFound)
 }

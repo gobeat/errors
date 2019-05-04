@@ -1,6 +1,10 @@
 package errors
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+	"strings"
+)
 
 type Error interface {
 	error
@@ -33,7 +37,7 @@ func (e *factoryError) MarshalJSON() ([]byte, error) {
 }
 
 func (e *factoryError) Error() string {
-	return e.message
+	return strings.TrimSpace(fmt.Sprintf("%s %s", e.code, e.message))
 }
 
 func (e *factoryError) Code() string {
