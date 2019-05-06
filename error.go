@@ -8,6 +8,7 @@ import (
 
 type Error interface {
 	error
+	WithError(err error) Error
 	Code() string
 	WithCode(code string) Error
 	Message() string
@@ -34,6 +35,10 @@ func (e *factoryError) MarshalJSON() ([]byte, error) {
 		Code:    e.code,
 		Message: e.message,
 	})
+}
+
+func (e *factoryError) WithError(err error) Error {
+	return e.WithMessage(err.Error())
 }
 
 func (e *factoryError) Error() string {

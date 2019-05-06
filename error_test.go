@@ -2,6 +2,7 @@ package errors
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"strings"
 	"testing"
@@ -30,6 +31,11 @@ func TestErrorError(t *testing.T) {
 	expected = fmt.Sprintf("%s", m)
 	actual = e.Error()
 	if strings.Compare(expected, actual) != 0 {
+		t.Error("Unexpected error string")
+	}
+
+	_ = e.WithError(errors.New("some error"))
+	if e.Error() != "some error" {
 		t.Error("Unexpected error string")
 	}
 }
