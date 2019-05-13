@@ -7,6 +7,7 @@ import (
 )
 
 type HttpError interface {
+	error
 	Code() string
 	WithCode(code string) HttpError
 	Message() string

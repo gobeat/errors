@@ -26,3 +26,13 @@ func TestHttpErrorJsonEncode(t *testing.T) {
 		t.Error("Unexpected json result")
 	}
 }
+
+func TestNewHttpErrorImplementError(t *testing.T) {
+	c := "some_code"
+	m := "some_message"
+	he := NewHttpError(c, m, 500)
+	_, ok := he.(error)
+	if !ok {
+		t.Error("HttpError must implement error")
+	}
+}
