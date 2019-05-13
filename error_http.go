@@ -1,6 +1,10 @@
 package errors
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+	"strings"
+)
 
 type HttpError interface {
 	Code() string
@@ -23,6 +27,10 @@ type factoryHttpError struct {
 	code    string
 	message string
 	status  int
+}
+
+func (e *factoryHttpError) Error() string {
+	return strings.TrimSpace(fmt.Sprintf("[%s] %s", e.code, e.message))
 }
 
 func (e *factoryHttpError) MarshalJSON() ([]byte, error) {

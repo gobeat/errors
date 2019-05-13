@@ -21,21 +21,21 @@ func TestErrorError(t *testing.T) {
 	c := "some_code"
 	m := "some_message"
 	e := NewError(c, m)
-	expected := fmt.Sprintf("%s %s", c, m)
+	expected := fmt.Sprintf("[%s] %s", c, m)
 	actual := e.Error()
 	if strings.Compare(expected, actual) != 0 {
 		t.Error("Unexpected error string")
 	}
 
 	_ = e.WithCode("")
-	expected = fmt.Sprintf("%s", m)
+	expected = fmt.Sprintf("[] %s", m)
 	actual = e.Error()
 	if strings.Compare(expected, actual) != 0 {
 		t.Error("Unexpected error string")
 	}
 
 	_ = e.WithError(errors.New("some error"))
-	if e.Error() != "some error" {
+	if e.Error() != "[] some error" {
 		t.Error("Unexpected error string")
 	}
 }

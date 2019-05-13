@@ -42,7 +42,7 @@ func (e *factoryError) WithError(err error) Error {
 }
 
 func (e *factoryError) Error() string {
-	return strings.TrimSpace(fmt.Sprintf("%s %s", e.code, e.message))
+	return strings.TrimSpace(fmt.Sprintf("[%s] %s", e.code, e.message))
 }
 
 func (e *factoryError) Code() string {
