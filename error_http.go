@@ -1,24 +1,56 @@
 package errors
 
+import "encoding/json"
+
 type HttpError interface {
-	Error
+	Code() string
+	WithCode(code string) HttpError
+	Message() string
+	WithMessage(message string) HttpError
 	Status() int
 	WithStatus(status int) HttpError
 }
 
 func NewHttpError(code string, message string, status int) HttpError {
 	return &factoryHttpError{
-		status: status,
-		factoryError: factoryError{
-			code:    code,
-			message: message,
-		},
+		code:    code,
+		message: message,
+		status:  status,
 	}
 }
 
 type factoryHttpError struct {
-	factoryError
-	status int
+	code    string
+	message string
+	status  int
+}
+
+func (e *factoryHttpError) MarshalJSON() ([]byte, error) {
+	return json.Marshal(struct {
+		Code    string `json:"code"`
+		Message string `json:"message"`
+	}{
+		Code:    e.code,
+		Message: e.message,
+	})
+}
+
+func (e *factoryHttpError) Code() string {
+	return e.code
+}
+
+func (e *factoryHttpError) WithCode(code string) HttpError {
+	e.code = code
+	return e
+}
+
+func (e *factoryHttpError) Message() string {
+	return e.message
+}
+
+func (e *factoryHttpError) WithMessage(message string) HttpError {
+	e.message = message
+	return e
 }
 
 func (e *factoryHttpError) Status() int {
